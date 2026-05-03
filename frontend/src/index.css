@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #4f46e5;
+  --secondary-color: #818cf8;
+  --bg-dark: #0f172a;
+  --bg-light: #f8fafc;
+  --text-dark: #f8fafc;
+  --text-light: #1e293b;
+}
+
+body {
+  margin: 0;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: var(--text-dark);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #f8fafc;
+}
+
+.glass-panel h1, .glass-panel h2, .glass-panel h3, .glass-panel p, .glass-panel span, .glass-panel label {
+  color: #f8fafc !important;
+}
+
+.glass-panel input, .glass-panel select {
+  background: rgba(15, 23, 42, 0.6);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-panel input::placeholder {
+  color: #94a3b8;
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Override existing background utilities used in components for dark theme */
+.bg-white, .bg-blue-50, .bg-blue-100, .bg-gray-50 {
+  background-color: rgba(15, 23, 42, 0.4) !important;
+  backdrop-filter: blur(8px);
+}
+
+.text-gray-900, .text-gray-800 {
+  color: #f8fafc !important;
+}
+
+.text-gray-500, .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+.border-gray-100, .border-gray-200, .border-gray-300 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Buttons */
+button {
+  transition: all 0.3s ease;
+}
+
+/* Dynamic Map Border */
+.leaflet-container {
+  border-radius: 0.75rem;
+  z-index: 10;
+}
