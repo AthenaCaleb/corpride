@@ -7,11 +7,11 @@ const { matchRide } = require('../utils/matchMaker');
 // @access  Private (Employee)
 const requestRide = async (req, res) => {
   try {
-    const { shiftTime, pickupAddress, coordinates } = req.body;
-    console.log(`Booking request for ${req.user.name} at shift ${shiftTime}. Coordinates:`, coordinates);
+    const { shiftTime, pickupAddress, destinationAddress, coordinates } = req.body;
+    console.log(`Booking request for ${req.user.name} at shift ${shiftTime} to ${destinationAddress}. Coordinates:`, coordinates);
 
-    if (!shiftTime) {
-      return res.status(400).json({ message: 'Shift time is required' });
+    if (!shiftTime || !destinationAddress) {
+      return res.status(400).json({ message: 'Shift time and destination are required' });
     }
 
     // Default coordinates if not provided
@@ -21,6 +21,8 @@ const requestRide = async (req, res) => {
     const newRequest = await RideRequest.create({
       employee: req.user._id,
       shiftTime,
+      destinationAddress,
+      company: req.user.company,
       pickupLocation: {
         address,
         type: 'Point',

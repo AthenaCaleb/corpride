@@ -11,6 +11,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     if (user) {
       const newSocket = io('http://localhost:8080');
+      newSocket.emit('joinCompany', user.company);
       setSocket(newSocket);
 
       return () => newSocket.close();

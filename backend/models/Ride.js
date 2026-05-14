@@ -9,6 +9,8 @@ const RideSchema = new mongoose.Schema({
     coordinates: [Number] // [longitude, latitude]
   }],
   shiftTime: { type: String, required: true },
+  destinationAddress: { type: String, required: true },
+  company: { type: String, required: true },
   status: { 
     type: String, 
     enum: ['scheduled', 'ongoing', 'completed', 'cancelled'], 

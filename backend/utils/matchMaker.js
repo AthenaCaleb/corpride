@@ -6,10 +6,11 @@ const MAX_PASSENGERS = 4;
 
 const matchRide = async (rideRequest) => {
   try {
-    // 1. Look for an existing scheduled ride for the same shift with space
-    // 1. Look for an existing scheduled ride for the same shift within 5km
+    // 1. Look for an existing scheduled ride for the same shift, company and destination with space
     let existingRide = await Ride.findOne({
       shiftTime: rideRequest.shiftTime,
+      company: rideRequest.company,
+      destinationAddress: rideRequest.destinationAddress,
       status: 'scheduled',
       'pickupPoints.coordinates': {
         $near: {
@@ -33,9 +34,7 @@ const matchRide = async (rideRequest) => {
     }
 
     // 2. No existing ride with space, try to create a new one
-    // Find an available driver who is not currently busy at that shiftTime
-    // For simplicity, we find any driver and we could check if they already have a ride for that shift.
-    // Let's find drivers who don't have a scheduled ride at this shiftTime
+    // Find an available driver who is not currently busy at that shiftTime AND belongs to the same company
     const busyDriversForShift = await Ride.find({
       shiftTime: rideRequest.shiftTime,
       status: { $in: ['scheduled', 'ongoing'] }
@@ -45,6 +44,7 @@ const matchRide = async (rideRequest) => {
 
     const availableDriver = await User.findOne({
       role: 'driver',
+      company: rideRequest.company,
       _id: { $nin: busyDriverIds }
     });
 
@@ -54,6 +54,8 @@ const matchRide = async (rideRequest) => {
         employees: [rideRequest.employee],
         pickupPoints: [rideRequest.pickupLocation],
         shiftTime: rideRequest.shiftTime,
+        destinationAddress: rideRequest.destinationAddress,
+        company: rideRequest.company,
         status: 'scheduled'
       });
 

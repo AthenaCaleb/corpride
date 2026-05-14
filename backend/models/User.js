@@ -7,6 +7,8 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, enum: ['employee', 'driver', 'admin'], default: 'employee' },
   shiftTime: { type: String },
   address: { type: String },
+  company: { type: String, required: true },
+  emergencyContact: { type: String },
   location: {
     type: { type: String, default: 'Point' },
     coordinates: [Number] // [longitude, latitude]

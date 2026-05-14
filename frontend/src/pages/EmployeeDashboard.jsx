@@ -10,6 +10,7 @@ const EmployeeDashboard = () => {
   
   const [shiftTime, setShiftTime] = useState(user?.shiftTime || '09:00');
   const [pickupAddress, setPickupAddress] = useState(user?.address || '');
+  const [destinationAddress, setDestinationAddress] = useState('');
   const [requests, setRequests] = useState([]);
   const [activeRides, setActiveRides] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -62,6 +63,7 @@ const EmployeeDashboard = () => {
             const { data } = await axios.post('http://localhost:8080/api/rides/request', {
               shiftTime,
               pickupAddress,
+              destinationAddress,
               coordinates: coords
             }, config);
             setMessage(data.message);
@@ -87,6 +89,8 @@ const EmployeeDashboard = () => {
       socket.emit('triggerSOS', {
         userId: user._id,
         name: user.name,
+        company: user.company,
+        emergencyContact: user.emergencyContact,
         rideId: activeRides[0]._id,
         timestamp: new Date()
       });
@@ -162,6 +166,18 @@ const EmployeeDashboard = () => {
                 onChange={(e) => setPickupAddress(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="e.g. Sector 14, Main Gate"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Destination Address (Office Branch)</label>
+              <input 
+                type="text" 
+                value={destinationAddress} 
+                onChange={(e) => setDestinationAddress(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g. Building 5, Cyber City"
                 required
               />
             </div>

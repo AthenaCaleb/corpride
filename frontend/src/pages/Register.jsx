@@ -9,7 +9,9 @@ const Register = () => {
     password: '',
     role: 'employee',
     shiftTime: '09:00',
-    address: ''
+    address: '',
+    company: '',
+    emergencyContact: ''
   });
   const [error, setError] = useState('');
   const { register } = useContext(AuthContext);
@@ -56,6 +58,16 @@ const Register = () => {
             <div>
               <label className="block text-sm font-medium text-gray-700">Password</label>
               <input type="password" name="password" required className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" onChange={handleChange} />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Company Name</label>
+              <input type="text" name="company" required className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" onChange={handleChange} placeholder="e.g. Google, Microsoft" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Emergency Contact (Email/Phone)</label>
+              <input type="text" name="emergencyContact" required className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" onChange={handleChange} placeholder="e.g. spouse@mail.com" />
             </div>
 
             <div>

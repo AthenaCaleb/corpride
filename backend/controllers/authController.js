@@ -10,10 +10,10 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, shiftTime, address, location } = req.body;
+    const { name, email, password, role, shiftTime, address, company, emergencyContact, location } = req.body;
 
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Please add all required fields' });
+    if (!name || !email || !password || !company) {
+      return res.status(400).json({ message: 'Please add all required fields including company' });
     }
 
     const userExists = await User.findOne({ email });
@@ -38,6 +38,8 @@ const registerUser = async (req, res) => {
       role: role || 'employee',
       shiftTime,
       address,
+      company,
+      emergencyContact,
       location: userLocation
     });
 
@@ -47,6 +49,8 @@ const registerUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        company: user.company,
+        emergencyContact: user.emergencyContact,
         token: generateToken(user._id),
       });
     } else {
@@ -70,6 +74,8 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        company: user.company,
+        emergencyContact: user.emergencyContact,
         token: generateToken(user._id),
       });
     } else {

@@ -7,7 +7,7 @@ const RideRequest = require('../models/RideRequest');
 // @access  Private (Admin)
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}).select('-password').sort({ createdAt: -1 });
+    const users = await User.find({ company: req.user.company }).select('-password').sort({ createdAt: -1 });
     res.status(200).json(users);
   } catch (error) {
     console.error(error);
@@ -20,7 +20,7 @@ const getAllUsers = async (req, res) => {
 // @access  Private (Admin)
 const getAllRides = async (req, res) => {
   try {
-    const rides = await Ride.find({})
+    const rides = await Ride.find({ company: req.user.company })
       .populate('driver', 'name')
       .populate('employees', 'name')
       .sort({ createdAt: -1 });
@@ -36,7 +36,7 @@ const getAllRides = async (req, res) => {
 // @access  Private (Admin)
 const getAllRequests = async (req, res) => {
   try {
-    const requests = await RideRequest.find({})
+    const requests = await RideRequest.find({ company: req.user.company })
       .populate('employee', 'name')
       .sort({ createdAt: -1 });
     res.status(200).json(requests);

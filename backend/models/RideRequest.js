@@ -8,6 +8,8 @@ const RideRequestSchema = new mongoose.Schema({
     coordinates: [Number] // [longitude, latitude]
   },
   shiftTime: { type: String, required: true },
+  destinationAddress: { type: String, required: true },
+  company: { type: String, required: true },
   status: { type: String, enum: ['pending', 'matched', 'cancelled'], default: 'pending' }
 }, { timestamps: true });
 

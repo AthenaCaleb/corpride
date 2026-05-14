@@ -28,7 +28,12 @@ io.on('connection', (socket) => {
 
   socket.on('joinRide', (rideId) => {
     socket.join(rideId);
-    console.log(`User joined ride: ${rideId}`);
+    console.log(`User joined ride room: ${rideId}`);
+  });
+
+  socket.on('joinCompany', (company) => {
+    socket.join(`company_${company}`);
+    console.log(`User joined company room: company_${company}`);
   });
 
   socket.on('locationUpdate', (data) => {
@@ -37,8 +42,13 @@ io.on('connection', (socket) => {
 
   socket.on('triggerSOS', (data) => {
     console.log('SOS TRIGGERED:', data);
-    // Broadcast to all admins or save to DB in a real app
-    io.emit('emergencyAlert', data);
+    const { company, name, emergencyContact, rideId } = data;
+    
+    // Broadcast ONLY to the company room (Admins of that company)
+    io.to(`company_${company}`).emit('emergencyAlert', data);
+    
+    // Simulate sending alert to emergency contact
+    console.log(`EMERGENCY NOTIFICATION sent to ${emergencyContact} for employee ${name}`);
   });
 
   socket.on('disconnect', () => {
